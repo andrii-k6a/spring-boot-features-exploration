@@ -23,7 +23,7 @@ public class WelcomeController {
     @Value("${enterprise.greeting}")
     private String greeting;
 
-    @GetMapping
+    @GetMapping({"", "/welcome"})
     public String welcome() {
         log.info("Getting welcome message for the following profiles: {}", activeProfiles());
         return format(WELCOME_MESSAGE_TEMPLATE, name, greeting);
