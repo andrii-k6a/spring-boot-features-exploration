@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import static java.lang.String.format;
-import static java.lang.String.join;
+import static org.kook.spring.boot.exploration.utils.Utils.joinOrDefault;
 
 @Slf4j
 @RestController
@@ -18,6 +18,7 @@ public class WelcomeController {
     public static final String WELCOME_MESSAGE_TEMPLATE = "Welcome you at %s! %s";
 
     private final Environment env;
+
     @Value("${enterprise.name}")
     private String name;
     @Value("${enterprise.greeting}")
@@ -30,8 +31,8 @@ public class WelcomeController {
     }
 
     private String activeProfiles() {
-        String allActiveProfiles = join(", ", env.getActiveProfiles());
-        return allActiveProfiles.isBlank() ? "None, using default params" : allActiveProfiles;
+        String[] activeProfiles = env.getActiveProfiles();
+        return joinOrDefault(activeProfiles, "None, using default params");
     }
 
 }
