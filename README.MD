@@ -15,7 +15,8 @@ java -jar -Dspring.profiles.active=dev  build/libs/spring-boot-features-explorat
 * Build docker image and run a container locally
 
 Notice, for ARM64 platforms(e.g. M1 processor) the following flag 
-has to be applied for build and run commands: `--platform=linux/amd64`
+has to be applied for build and run commands: `--platform=linux/amd64`.
+Another option is to replace Dockerfile in root directory with the one in arm64 directory.
 
 ```shell
 ./gradlew clean build
