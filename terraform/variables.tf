@@ -11,20 +11,20 @@ variable "public_key_path" {
 }
 
 variable "image" {
-  description = "The app image to be used. Example: <your_username>/<your_repository_name>:1.0"
+  description = "The app image to be used for running the app. Template: <your_username>/<your_repository_name>:1.0"
   type        = string
-}
-
-variable "active_profiles" {
-  description = "Active profiles to be used by the app"
-  type        = string
-  default     = "dev"
 }
 
 variable "architecture" {
   description = "The image architecture"
   type        = string
   default     = "x86_64"
+}
+
+variable "active_profiles" {
+  description = "Active profiles to be used by the app"
+  type        = string
+  default     = "dev"
 }
 
 variable "restricted_access" {
