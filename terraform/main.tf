@@ -1,6 +1,6 @@
 resource "aws_instance" "app" {
   ami                         = data.aws_ami.amazon_linux.image_id
-  instance_type               = "t2.micro"
+  instance_type               = var.instance_type
   security_groups             = [aws_security_group.ec2.name]
   key_name                    = aws_key_pair.ec2_ssh.id
   associate_public_ip_address = true
