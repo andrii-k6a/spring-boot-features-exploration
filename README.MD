@@ -80,18 +80,3 @@ docker run -d -p 8080:8080 -e "SPRING_PROFILES_ACTIVE=dev" spring-boot-feature-e
     ```shell
     ssh -i "private_key_path" ec2-user@ec2-34-242-152-56.eu-west-1.compute.amazonaws.com
     ```
-
-## Features
-
-* **Profiles**
-
->`spring.profiles.active` and `SPRING_PROFILES_ACTIVE` - allow to specify active profiles to be used by an app.
-
-* **Actuator**
-
-> Spring Boot actuator module provides production-ready features. 
-> The recommended way to enable the features is to add 
-> a dependency on the spring-boot-starter-actuator “Starter”. 
-> More details are [here](https://docs.spring.io/spring-boot/docs/current/actuator-api/htmlsingle/) 
-> and [here](https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#actuator).
-
