@@ -7,14 +7,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConstructorBinding;
 
 @ConstructorBinding
-@ConfigurationProperties("spring.datasource")
+@ConfigurationProperties("enterprise")
 @RequiredArgsConstructor
 @Getter
 @ToString
-public class DBProperties {
-    private final String driverClassName;
-    private final String url;
-    private final String userName;
-    @ToString.Exclude
-    private final String password;
+public class EnterpriseProperties {
+    private final String name;
+    private final String greeting;
 }
