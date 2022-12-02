@@ -1,8 +1,13 @@
 package org.kook.spring.boot.exploration.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.kook.spring.boot.exploration.assembler.EmployeeModelAssembler;
 import org.kook.spring.boot.exploration.entity.Employee;
 import org.kook.spring.boot.exploration.service.EmployeeService;
+import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.IanaLinkRelations;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,20 +18,25 @@ import java.util.List;
 public class EmployeeController {
 
     private final EmployeeService employeeService;
+    private final EmployeeModelAssembler employeeModelAssembler;
 
     @GetMapping
-    public List<Employee> findAll() {
-        return employeeService.findAll();
+    public CollectionModel<EntityModel<Employee>> findAll() {
+        List<Employee> employees = employeeService.findAll();
+        return employeeModelAssembler.toCollectionModel(employees);
     }
 
     @GetMapping("/{id}")
-    public Employee findById(@PathVariable Long id) {
-        return employeeService.findById(id);
+    public EntityModel<Employee> findById(@PathVariable Long id) {
+        Employee employee = employeeService.findById(id);
+        return employeeModelAssembler.toModel(employee);
     }
 
     @PostMapping
-    public Employee newEmployee(@RequestBody Employee newEmployee) {
-        return employeeService.saveNewEmployee(newEmployee);
+    public ResponseEntity<EntityModel<Employee>> newEmployee(@RequestBody Employee newEmployee) {
+        EntityModel<Employee> entityModel = employeeModelAssembler.toModel(employeeService.saveNewEmployee(newEmployee));
+        return ResponseEntity.created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
+                .body(entityModel);
     }
 
     @PutMapping("/{id}")
