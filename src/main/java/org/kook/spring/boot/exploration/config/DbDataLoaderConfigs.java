@@ -22,10 +22,9 @@ public class DbDataLoaderConfigs {
     @ConditionalOnProperty(name = "enterprise.data.preload", havingValue = "true")
     public CommandLineRunner initDb(EmployeeRepository repository) {
         return args -> {
-            log.info("Preloading " + repository.save(new Employee("John Lexus", "composer")));
-            log.info("Preloading " + repository.save(new Employee("Chrome Oxide", "artist")));
-            log.info("Preloading " + repository.save(new Employee("Chandler Bing", "fictional character")));
-
+            log.info("Preloading " + repository.save(new Employee("John", "Lexus", "composer")));
+            log.info("Preloading " + repository.save(new Employee("Chrome", "Oxide", "artist")));
+            log.info("Preloading " + repository.save(new Employee("Chandler", "Bing", "fictional character")));
         };
     }
 
