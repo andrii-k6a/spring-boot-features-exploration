@@ -44,6 +44,11 @@ public class EmployeeController {
         return employeeService.replaceEmployee(newEmployee, id);
     }
 
+    @PatchMapping("/{id}")
+    public Employee modifyEmployee(@RequestBody Employee newEmployee, @PathVariable Long id) {
+        return employeeService.modifyEmployee(newEmployee, id);
+    }
+
     @DeleteMapping("/{id}")
     public void deleteEmployee(@PathVariable Long id) {
         employeeService.deleteEmployee(id);

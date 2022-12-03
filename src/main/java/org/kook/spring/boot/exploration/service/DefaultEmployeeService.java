@@ -8,6 +8,7 @@ import org.kook.spring.boot.exploration.persistence.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -43,6 +44,20 @@ public class DefaultEmployeeService implements EmployeeService {
                 .orElseGet(() -> {
                     newEmployee.setId(id);
                     return repository.save(newEmployee);
+                });
+    }
+
+    @Override
+    public Employee modifyEmployee(Employee employee, Long id) {
+        return repository.findById(id)
+                .map(e -> {
+                    Optional.ofNullable(employee.getName()).ifPresent(e::setName);
+                    Optional.ofNullable(employee.getRole()).ifPresent(e::setRole);
+                    return repository.save(e);
+                })
+                .orElseGet(() -> {
+                    employee.setId(id);
+                    return repository.save(employee);
                 });
     }
 
