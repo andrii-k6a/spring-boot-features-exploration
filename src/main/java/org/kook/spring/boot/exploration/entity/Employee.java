@@ -1,10 +1,14 @@
 package org.kook.spring.boot.exploration.entity;
 
 import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
+import static java.util.stream.Collectors.joining;
 
 @Entity
 public class Employee {
@@ -34,13 +38,19 @@ public class Employee {
     }
 
     public String getName() {
-        return firstName + " " + lastName;
+        String name = Stream.of(firstName, lastName)
+                .filter(Objects::nonNull)
+                .collect(joining(" "));
+        return name.isBlank() ? null : name;
     }
 
     public void setName(String name) {
-        String[] parts = name.split(" ");
-        firstName = parts[0];
-        lastName = parts[1];
+        Optional.ofNullable(name)
+                .map(n -> n.split(" "))
+                .ifPresent(parts -> {
+                    firstName = parts[0];
+                    lastName = parts[1];
+                });
     }
 
     public String getFirstName() {
