@@ -2,7 +2,12 @@ package org.kook.spring.boot.exploration.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.kook.spring.boot.exploration.exception.EmployeeNotFoundException;
+import org.kook.spring.boot.exploration.exception.IllegalOrderStatusException;
+import org.springframework.hateoas.MediaTypes;
+import org.springframework.hateoas.mediatype.problem.Problem;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,4 +32,13 @@ public class GlobalControllerAdvice {
         return e.getMessage();
     }
 
+    @ExceptionHandler(IllegalOrderStatusException.class)
+    public ResponseEntity<?> illegalOrderStatusHandler(IllegalOrderStatusException e) {
+        return ResponseEntity
+                .status(HttpStatus.METHOD_NOT_ALLOWED)
+                .header(HttpHeaders.CONTENT_TYPE, MediaTypes.HTTP_PROBLEM_DETAILS_JSON_VALUE)
+                .body(Problem.create()
+                        .withTitle("Method not allowed")
+                        .withDetail("You can't complete or cancel an order that is in the " + e.getMessage() + " status"));
+    }
 }
