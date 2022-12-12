@@ -1,0 +1,16 @@
+{
+  "properties": [
+    {
+      "name": "org.kook.spring.boot.exploration.object.singularity.enabled",
+      "type": "java.lang.Boolean",
+      "defaultValue": true,
+      "description": "Flag to enable/disable object singularity auto configs"
+    },
+    {
+      "name": "org.kook.spring.boot.exploration.object.singularity.author",
+      "type": "java.lang.String",
+      "defaultValue": "unknown",
+      "description": "Object singularity author"
+    }
+  ]
+}

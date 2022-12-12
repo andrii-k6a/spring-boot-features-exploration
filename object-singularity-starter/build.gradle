@@ -1,0 +1,47 @@
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
+plugins {
+    id 'org.springframework.boot' version '2.7.4' apply false
+    id 'io.spring.dependency-management' version '1.0.14.RELEASE'
+    id 'java'
+}
+
+group 'org.kook.spring.boot.exploration.singularity.starter'
+version '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+dependencyManagement {
+    imports {
+        mavenBom SpringBootPlugin.BOM_COORDINATES
+    }
+}
+
+dependencies {
+    implementation(
+            'org.springframework.boot:spring-boot-autoconfigure',
+            'org.hibernate.validator:hibernate-validator:6.0.17.Final',
+            'org.slf4j:slf4j-api:2.0.3',
+    )
+    annotationProcessor(
+            // If you are using Lombok in your project, you need to make sure
+            // that its annotation processor runs before spring-boot-configuration-processor
+            'org.springframework.boot:spring-boot-configuration-processor'
+    )
+    testImplementation(
+            'org.springframework.boot:spring-boot-starter-test'
+    )
+}
+
+test {
+    useJUnitPlatform()
+}
+
+// required for handling additional-spring-configuration-metadata.json
+// https://docs.spring.io/spring-boot/docs/current/reference/html/configuration-metadata.html
+tasks.named('compileJava') {
+    inputs.files(tasks.named('processResources'))
+}
